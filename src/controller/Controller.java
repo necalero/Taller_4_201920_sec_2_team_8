@@ -59,7 +59,7 @@ public class Controller {
 				int n=lector.nextInt();
 				
 
-				modelo.generarMuestra(n);
+				
 				
 				
 
