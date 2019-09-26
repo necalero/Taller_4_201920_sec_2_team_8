@@ -1,7 +1,12 @@
 package model.logic;
 
-import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+
+import java.io.FileReader;
+
+import com.opencsv.CSVReader;
+
+import model.data_structures.DoublyLinkedList;
+
 
 /**
  * Definicion del modelo del mundo
@@ -11,24 +16,18 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
+	private DoublyLinkedList datos;
+	
+	//-----------------------------------------------------------------
 	
 	/**
-	 * Constructor del modelo del mundo con capacidad predefinida
+	 * Constructor del modelo del mundo
 	 */
 	public MVCModelo()
 	{
-		datos = new ArregloDinamico(7);
 	}
 	
-	/**
-	 * Constructor del modelo del mundo con capacidad dada
-	 * @param tamano
-	 */
-	public MVCModelo(int capacidad)
-	{
-		datos = new ArregloDinamico(capacidad);
-	}
+	//-----------------------------------------------------------------
 	
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
@@ -36,37 +35,41 @@ public class MVCModelo {
 	 */
 	public int darTamano()
 	{
-		return datos.darTamano();
+		return datos.darSize();
 	}
 
 	/**
 	 * Requerimiento de agregar dato
 	 * @param dato
 	 */
-	public void agregar(String dato)
+	public void cargar(int trimestre) throws NoExisteException
 	{	
-		datos.agregar(dato);
+		CSVReader reader;
+		if(trimestre==1)
+		{
+			FileReader fr = new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv");
+			reader = new CSVReader(fr);
+			String [] nextLine=reader.readNext();
+			while (nextLine != null) 
+			{
+				datos.añadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
+				nextLine = reader.readNext();
+			}
+		} 
+		else if(trimestre==2)
+		{
+			FileReader fr = new FileReader("./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv");
+			reader = new CSVReader(fr);
+			String [] nextLine=reader.readNext();
+			while (nextLine != null) 
+			{
+				datos.añadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
+				nextLine = reader.readNext();
+			}
+		} 
+		else
+		{
+			throw new NoExisteException("No existe el trimestre ingresado");
+		}
 	}
-	
-	/**
-	 * Requerimiento buscar dato
-	 * @param dato Dato a buscar
-	 * @return dato encontrado
-	 */
-	public String buscar(String dato)
-	{
-		return datos.buscar(dato);
-	}
-	
-	/**
-	 * Requerimiento eliminar dato
-	 * @param dato Dato a eliminar
-	 * @return dato eliminado
-	 */
-	public String eliminar(String dato)
-	{
-		return datos.eliminar(dato);
-	}
-
-
 }

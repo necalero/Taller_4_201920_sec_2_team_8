@@ -9,10 +9,10 @@ public class Controller {
 
 	/* Instancia del Modelo*/
 	private MVCModelo modelo;
-	
+
 	/* Instancia de la Vista*/
 	private MVCView view;
-	
+
 	/**
 	 * Crear la vista y el modelo del proyecto
 	 * @param capacidad tamaNo inicial del arreglo
@@ -22,7 +22,7 @@ public class Controller {
 		view = new MVCView();
 		modelo = new MVCModelo();
 	}
-		
+
 	public void run() 
 	{
 		Scanner lector = new Scanner(System.in);
@@ -34,70 +34,41 @@ public class Controller {
 			view.printMenu();
 
 			int option = lector.nextInt();
-			switch(option){
-				case 1:
-					System.out.println("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
-				    int capacidad = lector.nextInt();
-				    modelo = new MVCModelo(capacidad); 
-					System.out.println("Arreglo Dinamico creado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
+			switch(option)
+			{
+			case 1:
+				view.printMessage("Se estan cargando los viajes: ");
+				modelo = new MVCModelo();
+				view.printMessage("Ingrese el numero de trimestre a cargar: (1 o 2)");
+				int trimestre=lector.nextInt();
+				
+				try
+				{
+					modelo.cargar(trimestre);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				break;
 
-				case 2:
-					System.out.println("--------- \nDar cadena (simple) a ingresar: ");
-					dato = lector.next();
-					modelo.agregar(dato);
-					System.out.println("Dato agregado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
+			case 2:
+				view.printMessage("Generar muestra de n elementos:");
+				view.printMessage("Ingrese el tamaño de la muestra");
+				int n=lector.nextInt();
+				
 
-				case 3:
-					System.out.println("--------- \nDar cadena (simple) a buscar: ");
-					dato = lector.next();
-					respuesta = modelo.buscar(dato);
-					if ( respuesta != null)
-					{
-						System.out.println("Dato encontrado: "+ respuesta);
-					}
-					else
-					{
-						System.out.println("Dato NO encontrado");
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
+				modelo.generarMuestra(n);
+				
+				
 
-				case 4:
-					System.out.println("--------- \nDar cadena (simple) a eliminar: ");
-					dato = lector.next();
-					respuesta = modelo.eliminar(dato);
-					if ( respuesta != null)
-					{
-						System.out.println("Dato eliminado "+ respuesta);
-					}
-					else
-					{
-						System.out.println("Dato NO eliminado");							
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
-
-				case 5: 
-					System.out.println("--------- \nContenido del Arreglo: ");
-					view.printModelo(modelo);
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;	
-					
-				case 6: 
-					System.out.println("--------- \n Hasta pronto !! \n---------"); 
-					lector.close();
-					fin = true;
-					break;	
-
-				default: 
-					System.out.println("--------- \n Opcion Invalida !! \n---------");
-					break;
+			default: 
+				view.printMessage("--------- \n Opcion Invalida !! \n---------");
+				break;
+				
 			}
 		}
-		
+
 	}	
 }
