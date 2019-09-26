@@ -1,11 +1,14 @@
 package model.logic;
 
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import com.opencsv.CSVReader;
 
 import model.data_structures.DoublyLinkedList;
+import model.data_structures.UBERTrip;
 
 
 /**
@@ -41,8 +44,10 @@ public class MVCModelo {
 	/**
 	 * Requerimiento de agregar dato
 	 * @param dato
+	 * @throws IOException 
 	 */
-	public void cargar(int trimestre) throws NoExisteException
+	@SuppressWarnings("unchecked")
+	public void cargar(int trimestre) throws NoExisteException, IOException
 	{	
 		CSVReader reader;
 		if(trimestre==1)
@@ -52,9 +57,10 @@ public class MVCModelo {
 			String [] nextLine=reader.readNext();
 			while (nextLine != null) 
 			{
-				datos.añadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
+				datos.anadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
 				nextLine = reader.readNext();
 			}
+			reader.close();
 		} 
 		else if(trimestre==2)
 		{
@@ -63,9 +69,10 @@ public class MVCModelo {
 			String [] nextLine=reader.readNext();
 			while (nextLine != null) 
 			{
-				datos.añadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
+				datos.anadirUltimo(new UBERTrip(nextLine[0],nextLine[1],nextLine[2],nextLine[3],nextLine[4],nextLine[5], nextLine[6]));
 				nextLine = reader.readNext();
 			}
+			reader.close();
 		} 
 		else
 		{
