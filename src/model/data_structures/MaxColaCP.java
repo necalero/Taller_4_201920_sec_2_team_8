@@ -1,4 +1,8 @@
 package model.data_structures;
+import java.util.Comparator;
+
+import com.sun.javafx.css.StyleCache.Key;
+
 import model.logic.MVCModelo;
 import model.logic.NoExisteException;
 
@@ -7,6 +11,12 @@ public class MaxColaCP <Item extends Comparable<Integer>>
 	//----------------------------------------------------
 	// atributos.
 	//----------------------------------------------------
+	private Key[] pq;                    // store items at indices 1 to n
+	private Comparator<Key> comparator;  // optional comparator
+	private Nodo<Item> first;    // beginning of queue
+	private Nodo<Item> last;     // end of queue
+	
+	
 	private int tamaño;          // tamaño del heap
 	private MVCModelo modelo;    //vinculo a las linked list.
 	private Nodo<Item> inicio;    // beginning of queue
@@ -87,9 +97,14 @@ public class MaxColaCP <Item extends Comparable<Integer>>
 	/*
 	 * se encarga de retornar el elemento maximo del heap.
 	 */
-	public Item darMax()
+	public Item darMax() throws NoExisteException
 	{
-		return null;
+		if (esVacia()) throw new NoExisteException("Queue underflow");
+		Item item = last.darItem();
+		last = last.darAnterior();
+		n--;
+		if (esVacia()) last = null;   // to avoid loitering
+		return item;
 	}
 	/*
 	 * metodo que se encarga de decir si el heap esta vacio o no.

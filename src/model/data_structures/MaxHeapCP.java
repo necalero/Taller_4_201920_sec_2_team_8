@@ -1,4 +1,8 @@
 package model.data_structures;
+import java.util.Comparator;
+
+import com.sun.javafx.css.StyleCache.Key;
+
 import model.logic.MVCModelo;
 import model.logic.NoExisteException;
 
@@ -8,6 +12,9 @@ public class MaxHeapCP <Item extends Comparable<Integer>>
 	//----------------------------------------------------
 	// atributos.
 	//----------------------------------------------------
+
+	private Key[] pq;                    // store items at indices 1 to n
+	private Comparator<Key> comparator;  // optional comparator
 	private Nodo<Item> first;    // beginning of queue
 	private Nodo<Item> last;     // end of queue
 	private int n;               // number of elements on queue
@@ -18,11 +25,24 @@ public class MaxHeapCP <Item extends Comparable<Integer>>
 	// Constructor
 	//-----------------------------------------------------
 
-	public MaxHeapCP()
+	/**
+	 * Initializes an empty priority queue with the given initial capacity.
+	 *
+	 * @param  initCapacity the initial capacity of this priority queue
+	 */
+	public MaxHeapCP(int initCapacity) 
 	{
-		first = null;
-		last  = null;
+		pq = (Key[]) new Object[initCapacity + 1];
 		n = 0;
+	}
+
+
+	/**
+	 * Initializes an empty priority queue.
+	 */
+	public MaxHeapCP() 
+	{
+		this(1);
 	}
 
 	/*
@@ -31,16 +51,7 @@ public class MaxHeapCP <Item extends Comparable<Integer>>
 	 */
 	public int darNumElementos() 
 	{
-		int respuesta;
-		if(n==0)
-		{
-			respuesta = 0;
-		}
-		else
-		{
-			respuesta =n;
-		}
-		return respuesta;
+		return n;
 	}
 
 	/*
@@ -72,9 +83,10 @@ public class MaxHeapCP <Item extends Comparable<Integer>>
 	/*
 	 * se encarga de retornar el elemento maximo del heap.
 	 */
-	public  Item darMax()
+	public  Key darMax() throws NoExisteException
 	{
-		return null;
+		if (n ==0) throw new NoExisteException("No existe el elemento");
+		return pq[1];
 	}
 	/*
 	 * metodo que se encarga de decir si el heap esta vacio o no.
@@ -84,7 +96,7 @@ public class MaxHeapCP <Item extends Comparable<Integer>>
 	public boolean esVacia ()
 	{
 		boolean respuesta =false;
-		if(modelo.darTamano()==0)
+		if(n ==0)
 		{
 			respuesta =true;
 		}

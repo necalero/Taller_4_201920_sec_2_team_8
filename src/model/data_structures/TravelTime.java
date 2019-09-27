@@ -14,6 +14,7 @@ public class TravelTime implements Comparable<TravelTime>
 	private int hod;
 	private double mean_travel_time;
 	private double standard_deviation_travel_time;
+	
 
 	//----------------------------------------
 	//constructor 
@@ -56,13 +57,21 @@ public class TravelTime implements Comparable<TravelTime>
 
 
 
-
-
-	@Override
 	public int compareTo(TravelTime o) 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		
+		TravelTime TimeTravel1 = new TravelTime();
+		int r = 0;
+		if (TimeTravel1.compareTo(o)>0)
+		{
+			r = +1;
+		}
+		else
+			if (TimeTravel1.compareTo(o)<0)
+			{
+				r = -1;
+			}
+		return r;
 	}
 
 }
