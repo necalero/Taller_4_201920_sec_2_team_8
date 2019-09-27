@@ -100,13 +100,9 @@ public class DoublyLinkedList<r> implements Serializable
 		}
 		else
 		{
-
 			anadirDespues(ultimoNodo, nodo);
-
 			ultimoNodo = nodo;
 		}
-
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -146,6 +142,30 @@ public class DoublyLinkedList<r> implements Serializable
 			nodoNuevo.cambiarSiguiente(nodoPosterior);
 		}
 		size++;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void anadir(r item)
+	{
+		Nodo nuevoNodo = new Nodo<r>(item);
+		if(primerNodo==null)
+		{
+			primerNodo = nuevoNodo;
+			ultimoNodo = nuevoNodo;
+		}
+		else
+		{
+			Nodo actual = primerNodo;
+			boolean seAnadio = false;
+			while(actual!=null&&!seAnadio)
+			{
+				if(actual.darSiguiente()==null)
+				{
+					anadirDespues(actual, nuevoNodo);
+					seAnadio= true;
+				}
+			}
+		}
 	}
 
 

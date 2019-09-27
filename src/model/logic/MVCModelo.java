@@ -8,6 +8,7 @@ import java.io.IOException;
 import com.opencsv.CSVReader;
 
 import model.data_structures.DoublyLinkedList;
+import model.data_structures.TravelTime;
 import model.data_structures.UBERTrip;
 
 
@@ -79,4 +80,30 @@ public class MVCModelo {
 			throw new NoExisteException("No existe el trimestre ingresado");
 		}
 	}
+	
+	
+	public DoublyLinkedList generarMuestra(int n)
+	{
+		
+		DoublyLinkedList<TravelTime> lista = new DoublyLinkedList<>();
+		
+		for(int i=0; i < n;i++)
+		{
+			TravelTime item = new TravelTime();
+			lista.anadir(item);
+		}
+		
+		return lista;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

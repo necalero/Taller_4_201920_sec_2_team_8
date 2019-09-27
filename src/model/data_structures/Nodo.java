@@ -5,11 +5,19 @@ public class Nodo<r>
 	private r item;
 	private Nodo<r> siguienteNodo;
 	private Nodo<r> anteriorNodo;
-
+	private int prioridad;
 	
 	
 	public Nodo (r elemento)
 	{
+		siguienteNodo = null;
+		anteriorNodo = null;
+		this.item = (r) elemento;
+	}
+	
+	public Nodo (r elemento, int prioridad)
+	{
+		this.prioridad = prioridad;
 		siguienteNodo = null;
 		anteriorNodo = null;
 		this.item = (r) elemento;
@@ -46,6 +54,11 @@ public class Nodo<r>
 	{
 		this.anteriorNodo = nodo;
 		
+	}
+	
+	public int darPrioridad()
+	{
+		return prioridad;
 	}
 	
 
